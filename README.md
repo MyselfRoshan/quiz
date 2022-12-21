@@ -1,2 +1,2 @@
 # Quiz
-Live URL:(https://quiz-iota-flame.vercel.app/)
+Live URL:[Quizzical](https://quiz-iota-flame.vercel.app/)
