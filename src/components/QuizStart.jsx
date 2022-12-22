@@ -1,7 +1,6 @@
 import React from "react";
 
 export default function QuizStart(props) {
-  console.log(props.setQuizStart());
   return (
     <div className="quizzical">
       <h1>Quizzical</h1>
