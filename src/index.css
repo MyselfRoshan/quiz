@@ -2,6 +2,7 @@
   --primary-clr-900: 231 42% 28%;
   --primary-clr-400: 220 43% 97%;
 
+  --secondary-clr-500: 230 61% 90%;
   --secondary-clr-400: 230 34% 46%;
 
   --fs-700: 2.5rem;
@@ -106,6 +107,7 @@ img:not([alt]) {
 .quiz-container {
   display: grid;
   height: 100vh;
+  padding: 5rem 10rem;
 }
 
 .quizzical {
@@ -129,4 +131,45 @@ h1 {
   scale: 1.05;
   box-shadow: 0 0 1.5rem hsl(var(--secondary-clr-400) / 0.75);
   transition: scale 500ms ease-in-out, box-shadow 1000ms ease-in-out;
+}
+
+.quiz {
+  --vertical-spacing: 2rem;
+  border-bottom: 2px solid #dbdef0;
+  padding: var(--vertical-spacing);
+}
+
+.quiz-question {
+  line-height: 1.1875;
+  font-weight: var(--fw-700);
+  font-size: var(--fs-500);
+  margin-bottom: calc(var(--vertical-spacing) - 0.5rem);
+}
+
+.quiz-answers {
+  display: flex;
+  gap: 3rem;
+}
+
+.quiz-answer {
+  /* --answer-name:"";
+  position: relative;
+  appearance: none; */
+  padding: 0.5em 1em;
+  min-width: 8.125rem;
+  min-height: 2.625rem;
+  border-radius: 8px;
+  background-color: inherit;
+  border: 2px solid #4d5b9e;
+}
+/* .quiz-answer::before {
+  position: relative;
+  content: var(--answer-name,"");
+} */
+.quiz .active {
+  background-color: hsl(var(--secondary-clr-500));
+  border-color: hsl(var(--secondary-clr-500));
+  scale: 1.05;
+  transition: border-color 500ms linear, background-color 500ms ease-in-out,
+    scale 1000ms ease;
 }
