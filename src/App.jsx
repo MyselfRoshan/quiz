@@ -17,14 +17,25 @@ function App() {
         ? await response.json()
         : Promise.reject(response);
       setQuizzesArray(data.results);
-      console.log(quizzesArray);
     }
     getQuizQuestion();
   }, []);
 
-  const quizQuestions = quizzesArray.map((quiz, index) => (
-    <QuizQuestion {...quiz} />
-  ));
+  const quizQuestions = quizzesArray.map((quiz, index) => {
+    const randomizeQuizAnswers = [
+      ...quiz.incorrect_answers,
+      quiz.correct_answer,
+    ];
+    randomizeQuizAnswers.sort(() => Math.random() * 0.5);
+
+    return (
+      <QuizQuestion key={index} {...quiz} answers={randomizeQuizAnswers} />
+    );
+  });
+
+  function handleClick() {
+    console.log("hi");
+  }
   return (
     <main className="quiz-container">
       {quizStart ? (
@@ -32,7 +43,9 @@ function App() {
       ) : (
         <>
           {quizQuestions}
-          <button className="check-playagain">Check answers</button>
+          <button className="check-playagain" onClick={handleClick}>
+            Check answers
+          </button>
         </>
       )}
     </main>
