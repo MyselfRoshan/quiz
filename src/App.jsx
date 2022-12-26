@@ -5,6 +5,10 @@ import QuizStart from "./components/QuizStart";
 function App() {
   const [quizStart, setQuizStart] = useState(true);
   const [quizzesArray, setQuizzesArray] = useState([]);
+  const [choseOption, setChoseOption] = useState([]);
+  const correctOptionArray = quizzesArray.map((quiz) => quiz.correct_answer);
+  console.log(correctOptionArray);
+  console.log(choseOption);
 
   useEffect(() => {
     const apiBaseURL = "https://opentdb.com/api.php?";
@@ -19,23 +23,34 @@ function App() {
       setQuizzesArray(data.results);
     }
     getQuizQuestion();
+    console.log(quizzesArray);
   }, []);
 
   const quizQuestions = quizzesArray.map((quiz, index) => {
-    const randomizeQuizAnswers = [
-      ...quiz.incorrect_answers,
-      quiz.correct_answer,
-    ];
-    randomizeQuizAnswers.sort(() => Math.random() * 0.5);
+    const options = [...quiz.incorrect_answers, quiz.correct_answer];
+    options.sort(() => Math.random() * 0.5);
 
     return (
-      <QuizQuestion key={index} {...quiz} answers={randomizeQuizAnswers} />
+      <QuizQuestion
+        key={index}
+        {...quiz}
+        options={options}
+        setChoseOption={setChoseOption}
+      />
     );
   });
 
   function handleClick() {
-    console.log("hi");
+    const result =
+      choseOption.length === correctOptionArray.length &&
+      choseOption.every((clickedAnswer) =>
+        correctOptionArray.includes(clickedAnswer),
+      );
+    if (result) {
+      console.log("hi");
+    }
   }
+
   return (
     <main className="quiz-container">
       {quizStart ? (
