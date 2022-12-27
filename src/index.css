@@ -105,6 +105,11 @@ img:not([alt]) {
   }
 }
 
+/* #root,
+.quiz-container {
+  height: 100%;
+} */
+
 .quiz-container {
   --vertical-spacing: 2rem;
   display: grid;
@@ -135,8 +140,19 @@ h1 {
   transition: scale 500ms ease-in-out, box-shadow 1000ms ease-in-out;
 }
 
-.check-playagain {
+.score-section {
   place-self: center;
+  display: flex;
+  gap: calc(var(--vertical-spacing) - 1rem);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.score-text {
+  font-size: var(--fs-500);
+  font-weight: var(--fw-700);
+}
+.score-checker_btn {
   font-size: var(--fs-450);
   max-width: 18rem;
   padding: 0.75em 3em;

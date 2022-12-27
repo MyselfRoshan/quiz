@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 export default function QuizQuestion(props) {
   const [clickedId, setClickedId] = useState(-1);
   // ?Inserting all the correct answer into choseOption array
-  // const [choseOption, setChoseOption] = useState({});
+  const [choseOption, setChoseOption] = useState();
+  // let choseOption;
 
   // To decode base64 string
   function base64toString(value) {
@@ -12,12 +13,14 @@ export default function QuizQuestion(props) {
 
   function handleClick(e, index) {
     setClickedId(index);
-    props.setChoseOption((prevchoseOption) => [
-      ...prevchoseOption,
-      e.target.textContent,
-    ]);
-    // props.handleClick(e.target.textContent);
+    setChoseOption(e.target.textContent);
   }
+  // useMemo(() => {
+  //   props.setChoseOption((prevchoseOption) => [
+  //     ...prevchoseOption,
+  //     choseOption,
+  //   ]);
+  // }, [choseOption]);
 
   const options = props.options.map((answer, index) => (
     <button
