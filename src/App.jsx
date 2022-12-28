@@ -14,7 +14,7 @@ function App() {
   });
   const [buttonText, setButtonText] = useState("Check answers");
   const correctOptionArray = quizzesArray.map((quiz) => quiz.correct_answer);
-  console.log(correctOptionArray);
+  // console.log(correctOptionArray);
   console.log(choseOption);
 
   useEffect(() => {
@@ -30,9 +30,6 @@ function App() {
       setQuizzesArray(data.results);
     }
     getQuizQuestion();
-    console.log(quizzesArray);
-
-    return () => clearTimeout(getQuizQuestion());
   }, []);
 
   const quizQuestions = quizzesArray.map((quiz, index) => {
@@ -43,25 +40,33 @@ function App() {
       <QuizQuestion
         key={index}
         {...quiz}
+        id={index}
         options={options}
         setChoseOption={setChoseOption}
+        choseOption={choseOption}
       />
     );
   });
 
   function handleClick() {
+    // Change the text content and api content on click
     if (buttonText === "Check answers") setButtonText("Play again");
     if (buttonText === "Play again") {
       setQuizStart(true);
       setButtonText("Check answers");
     }
+    // return true if all the clicked answers are equal with correct answer
     const result =
       choseOption.length === correctOptionArray.length &&
       choseOption.every((clickedAnswer) =>
         correctOptionArray.includes(clickedAnswer),
       );
+
+    const results = correctOptionArray.map((correctOption) =>
+      choseOption.includes(correctOption),
+    );
+    console.log(results);
     if (result) {
-      console.log("hi");
     }
   }
 
