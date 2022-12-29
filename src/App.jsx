@@ -3,19 +3,21 @@ import QuizQuestion from "./components/QuizQuestion";
 import QuizStart from "./components/QuizStart";
 
 function App() {
+  const [score, setScore] = useState([]);
   const [quizStart, setQuizStart] = useState(true);
   const [quizzesArray, setQuizzesArray] = useState([]);
   const [choseOption, setChoseOption] = useState([]);
+  const [buttonText, setButtonText] = useState("Check answers");
+  const correctOptionArray = quizzesArray.map((quiz, index) => {
+    return { id: index, text: quiz.correct_answer };
+  });
   const [apiUri, setApiUri] = useState({
     amount: 10,
     difficulty: "", //? Easy='easy' Medium='medium' Hard='hard'
     category: "", //?
     type: "", //?Multiple choice ='multiple' true/false='boolean'
   });
-  const [buttonText, setButtonText] = useState("Check answers");
-  const correctOptionArray = quizzesArray.map((quiz) => quiz.correct_answer);
-  // console.log(correctOptionArray);
-  console.log(choseOption);
+  console.log(correctOptionArray);
 
   useEffect(() => {
     const apiBaseURL = "https://opentdb.com/api.php?";
@@ -42,15 +44,25 @@ function App() {
         {...quiz}
         id={index}
         options={options}
+        correctOptionArray={correctOptionArray}
         setChoseOption={setChoseOption}
         choseOption={choseOption}
+        optionCheckerBtnTxt={buttonText}
+        score={score}
       />
     );
   });
 
   function handleClick() {
     // Change the text content and api content on click
-    if (buttonText === "Check answers") setButtonText("Play again");
+    if (buttonText === "Check answers") {
+      setButtonText("Play again");
+      setScore(
+        correctOptionArray.filter((correctTxt) =>
+          choseOption.some((choseTxt) => correctTxt.text === choseTxt.text),
+        ),
+      );
+    }
     if (buttonText === "Play again") {
       setQuizStart(true);
       setButtonText("Check answers");
@@ -61,13 +73,7 @@ function App() {
       choseOption.every((clickedAnswer) =>
         correctOptionArray.includes(clickedAnswer),
       );
-
-    const results = correctOptionArray.map((correctOption) =>
-      choseOption.includes(correctOption),
-    );
-    console.log(results);
-    if (result) {
-    }
+    console.log(score);
   }
 
   return (
@@ -82,7 +88,7 @@ function App() {
               className="score-text"
               hidden={buttonText === "Check answers"}
             >
-              You scored 3/{apiUri.amount} correct answers
+              You scored {score.length}/{apiUri.amount} correct answers
             </span>
             <button className="score-checker_btn" onClick={handleClick}>
               {buttonText}
