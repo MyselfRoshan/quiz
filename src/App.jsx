@@ -35,7 +35,7 @@ function App() {
   }, []);
 
   const quizQuestions = quizzesArray.map((quiz, index) => {
-    const options = [...quiz.incorrect_answers, quiz.correct_answer];
+    const options = [quiz.correct_answer, ...quiz.incorrect_answers];
     options.sort(() => Math.random() * 0.5);
 
     return (
@@ -48,7 +48,6 @@ function App() {
         setChoseOption={setChoseOption}
         choseOption={choseOption}
         optionCheckerBtnTxt={buttonText}
-        score={score}
       />
     );
   });
@@ -57,23 +56,11 @@ function App() {
     // Change the text content and api content on click
     if (buttonText === "Check answers") {
       setButtonText("Play again");
-      setScore(
-        correctOptionArray.filter((correctTxt) =>
-          choseOption.some((choseTxt) => correctTxt.text === choseTxt.text),
-        ),
-      );
     }
     if (buttonText === "Play again") {
       setQuizStart(true);
       setButtonText("Check answers");
     }
-    // return true if all the clicked answers are equal with correct answer
-    const result =
-      choseOption.length === correctOptionArray.length &&
-      choseOption.every((clickedAnswer) =>
-        correctOptionArray.includes(clickedAnswer),
-      );
-    console.log(score);
   }
 
   return (

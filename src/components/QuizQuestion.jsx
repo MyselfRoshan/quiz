@@ -39,26 +39,25 @@ export default function QuizQuestion(props) {
 
   const options = props.options.map((answer, index) => {
     let optionChoseBtnClass = "quiz-answer ";
+    console.log(props.correctOptionArray);
     if (props.optionCheckerBtnTxt === "Play again") {
-      const correctAnswer = props.correctOptionArray.some((a) =>
-        props.options.some((ae) => a.text === ae),
+      const correctAnswer = props.correctOptionArray.some(
+        (a) => a.text === answer,
       );
-      console.log(correctAnswer);
+      props.correctOptionArray.some((a) => console.log(a.text));
       if (correctAnswer)
-        optionChoseBtnClass = optionChoseBtnClass.replace("active", "correct");
+        optionChoseBtnClass = optionChoseBtnClass.concat(" correct");
     }
+
     if (index === clickedId) {
       optionChoseBtnClass = optionChoseBtnClass.concat(" active");
       if (props.optionCheckerBtnTxt === "Play again") {
-        // optionChoseBtnClass = optionChoseBtnClass.replace("active", "correct");
         const correctAnswer = props.correctOptionArray.some(
-          (a) => choseOption.text === a.text,
+          (correctOption) => choseOption.text === correctOption.text,
         );
-        console.log(props.choseOption);
-        console.log(correctAnswer);
         if (!correctAnswer)
           optionChoseBtnClass = optionChoseBtnClass.replace(
-            "correct",
+            "active",
             "incorrect",
           );
       }
