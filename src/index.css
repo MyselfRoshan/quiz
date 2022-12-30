@@ -5,6 +5,9 @@
   --secondary-clr-500: 230 61% 90%;
   --secondary-clr-400: 230 34% 46%;
 
+  --tertiary-clr-500: 360 81% 85%;
+  --tertiary-clr-400: 133 46% 71%;
+
   --fs-700: 2.5rem;
   --fs-600: 2.25rem;
   --fs-500: 2rem;
@@ -185,16 +188,24 @@ h1 {
   min-height: 2.625rem;
   border-radius: 8px;
   background-color: inherit;
-  border: 2px solid #4d5b9e;
+  color: hsl(var(--secondary-clr-400));
+  border: 2px solid hsl(var(--secondary-clr-400));
 }
-.quiz-answer-text {
-  position: absolute;
-  inset: 0;
-  content: var(--answer-name, "");
+.quiz .correct {
+  background-color: hsl(var(--tertiary-clr-400)) !important;
+  border-color: hsl(var(--tertiary-clr-400));
 }
+.quiz .incorrect {
+  background-color: hsl(var(--tertiary-clr-500));
+  border-color: hsl(var(--tertiary-clr-500));
+}
+
 .quiz .active {
   background-color: hsl(var(--secondary-clr-500));
   border-color: hsl(var(--secondary-clr-500));
+}
+
+.quiz :is(.active, .correct, .incorrect) {
   scale: 1.05;
   transition: border-color 500ms linear, background-color 500ms ease-in-out,
     scale 1000ms ease;
