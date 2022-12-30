@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import QuizQuestion from "./components/QuizQuestion";
 import QuizStart from "./components/QuizStart";
 
+const QuizQuestionMemo = React.memo(QuizQuestion);
+
 function App() {
-  const [score, setScore] = useState([]);
   const [quizStart, setQuizStart] = useState(true);
   const [quizzesArray, setQuizzesArray] = useState([]);
   const [choseOption, setChoseOption] = useState([]);
@@ -11,6 +12,7 @@ function App() {
   const correctOptionArray = quizzesArray.map((quiz, index) => {
     return { id: index, text: quiz.correct_answer };
   });
+
   const [apiUri, setApiUri] = useState({
     amount: 10,
     difficulty: "", //? Easy='easy' Medium='medium' Hard='hard'
@@ -33,34 +35,39 @@ function App() {
     }
     getQuizQuestion();
   }, []);
-
+  useCallback;
   const quizQuestions = quizzesArray.map((quiz, index) => {
-    const options = [quiz.correct_answer, ...quiz.incorrect_answers];
-    options.sort(() => Math.random() * 0.5);
-
+    const optionArray = [quiz.correct_answer, ...quiz.incorrect_answers];
+    optionArray.sort(() => Math.random() - 0.5);
     return (
-      <QuizQuestion
+      <QuizQuestionMemo
         key={index}
         {...quiz}
         id={index}
-        options={options}
+        optionArray={optionArray}
         correctOptionArray={correctOptionArray}
         setChoseOption={setChoseOption}
         choseOption={choseOption}
         optionCheckerBtnTxt={buttonText}
+        quizStart={quizStart}
       />
     );
   });
 
-  function handleClick() {
+  function handleClick(e) {
+    let btnTxt = e.target.textContent;
     // Change the text content and api content on click
-    if (buttonText === "Check answers") {
+    if (btnTxt === "Check answers") {
       setButtonText("Play again");
-    }
-    if (buttonText === "Play again") {
+    } else if (btnTxt === "Play again") {
       setQuizStart(true);
       setButtonText("Check answers");
     }
+    // ? get score points i.e. 1 to 10
+    const commonElements = choseOption.filter((x) =>
+      correctOptionArray.some((y) => JSON.stringify(y) === JSON.stringify(x)),
+    );
+    console.log(commonElements);
   }
 
   return (
@@ -75,9 +82,12 @@ function App() {
               className="score-text"
               hidden={buttonText === "Check answers"}
             >
-              You scored {score.length}/{apiUri.amount} correct answers
+              You scored {}/{apiUri.amount} correct answers
             </span>
-            <button className="score-checker_btn" onClick={handleClick}>
+            <button
+              className="score-checker_btn"
+              onClick={(e) => handleClick(e)}
+            >
               {buttonText}
             </button>
           </div>

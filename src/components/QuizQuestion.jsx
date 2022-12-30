@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 
 export default function QuizQuestion(props) {
   const [clickedId, setClickedId] = useState(-1);
-  // Inserting all the correct answer into choseOption array
+
+  // Inserting chose option into choseOption
   const [choseOption, setChoseOption] = useState({
     id: props.id,
     text: "",
@@ -17,6 +18,7 @@ export default function QuizQuestion(props) {
     setClickedId(index);
     setChoseOption({ ...choseOption, text: e.target.textContent });
   }
+
   useEffect(() => {
     const foundIndex = props.choseOption.findIndex(
       (el) => el.id === choseOption.id,
@@ -35,27 +37,25 @@ export default function QuizQuestion(props) {
         choseOption,
       ]);
     }
-  }, [choseOption]);
+  }, []);
 
-  const options = props.options.map((answer, index) => {
+  const options = props.optionArray.map((answer, index) => {
     let optionChoseBtnClass = "quiz-answer ";
-    console.log(props.correctOptionArray);
+    // Adds correct class to correct option if question id matches anser array id
     if (props.optionCheckerBtnTxt === "Play again") {
       const correctAnswer = props.correctOptionArray.some(
-        (a) => a.text === answer,
+        (a) => a.text === answer && a.id === props.id,
       );
-      props.correctOptionArray.some((a) => console.log(a.text));
-      if (correctAnswer)
-        optionChoseBtnClass = optionChoseBtnClass.concat(" correct");
+      optionChoseBtnClass = correctAnswer
+        ? "quiz-answer correct"
+        : "quiz-answer";
     }
-
+    // Buttons acts like radio buttons if clicKedId and index are equal
     if (index === clickedId) {
       optionChoseBtnClass = optionChoseBtnClass.concat(" active");
+      // Adds incorrect to all active class if it doesn't include "correct"
       if (props.optionCheckerBtnTxt === "Play again") {
-        const correctAnswer = props.correctOptionArray.some(
-          (correctOption) => choseOption.text === correctOption.text,
-        );
-        if (!correctAnswer)
+        if (!optionChoseBtnClass.includes("correct"))
           optionChoseBtnClass = optionChoseBtnClass.replace(
             "active",
             "incorrect",
@@ -68,6 +68,7 @@ export default function QuizQuestion(props) {
         key={index}
         className={optionChoseBtnClass}
         onClick={(e) => handleClick(e, index)}
+        disabled={props.optionCheckerBtnTxt === "Play again"}
       >
         {answer}
       </button>
