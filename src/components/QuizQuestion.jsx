@@ -2,12 +2,7 @@ import React, { useEffect, useState } from "react";
 
 export default function QuizQuestion(props) {
   const [clickedId, setClickedId] = useState(-1);
-
-  // Inserting chose option into choseOption
-  const [choseOption, setChoseOption] = useState({
-    id: props.id,
-    text: "",
-  });
+  const [choseOption, setChoseOption] = useState({ id: props.id, text: "" });
 
   // To decode base64 string
   function base64toString(value) {
@@ -16,28 +11,34 @@ export default function QuizQuestion(props) {
 
   function handleClick(e, index) {
     setClickedId(index);
-    setChoseOption({ ...choseOption, text: e.target.textContent });
+    setChoseOption({
+      ...choseOption,
+      text: btoa(e.target.textContent),
+    });
   }
 
   useEffect(() => {
-    const foundIndex = props.choseOption.findIndex(
-      (el) => el.id === choseOption.id,
-    );
-    if (foundIndex !== -1) {
-      // Replace the element at the found index
-      props.setChoseOption((prevChoseOption) => [
-        ...prevChoseOption.slice(0, foundIndex),
-        choseOption,
-        ...prevChoseOption.slice(foundIndex + 1),
-      ]);
-    } else {
-      // Append the element to the array
-      props.setChoseOption((prevChoseOption) => [
-        ...prevChoseOption,
-        choseOption,
-      ]);
+    if (props.optionCheckerBtnTxt === "Check answers") {
+      const foundIndex = props.choseOption.findIndex(
+        (el) => el.id === choseOption.id,
+      );
+      if (foundIndex !== -1) {
+        // Replace the element at the found index
+        props.setChoseOption((prevChoseOption) => [
+          ...prevChoseOption.slice(0, foundIndex),
+          choseOption,
+          ...prevChoseOption.slice(foundIndex + 1),
+        ]);
+      } else {
+        // Append the element to the array
+        props.setChoseOption((prevChoseOption) => [
+          ...prevChoseOption,
+          choseOption,
+        ]);
+      }
     }
-  }, []);
+  }, [choseOption]);
+  // console.log(choseOption);
 
   const options = props.optionArray.map((answer, index) => {
     let optionChoseBtnClass = "quiz-answer ";
@@ -70,13 +71,13 @@ export default function QuizQuestion(props) {
         onClick={(e) => handleClick(e, index)}
         disabled={props.optionCheckerBtnTxt === "Play again"}
       >
-        {answer}
+        {base64toString(answer)}
       </button>
     );
   });
   return (
     <div className="quiz">
-      <h2 className="quiz-question">{props.question}</h2>
+      <h2 className="quiz-question">{base64toString(props.question)}</h2>
       <div className="quiz-answers">{options}</div>
     </div>
   );

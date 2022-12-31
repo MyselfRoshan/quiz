@@ -151,7 +151,7 @@ h1 {
   align-items: center;
   justify-content: center;
 }
-.score-text {
+.message-txt {
   font-size: var(--fs-500);
   font-weight: var(--fw-700);
 }
