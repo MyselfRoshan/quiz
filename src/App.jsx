@@ -1,8 +1,6 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import QuizQuestion from "./components/QuizQuestion";
 import QuizStart from "./components/QuizStart";
-
-const QuizQuestionMemo = React.memo(QuizQuestion);
 
 function App() {
   const [quizStart, setQuizStart] = useState(true);
@@ -12,35 +10,50 @@ function App() {
   const correctOptionArray = quizzesArray.map((quiz, index) => {
     return { id: index, text: quiz.correct_answer };
   });
-
   const [apiUri, setApiUri] = useState({
     amount: 10,
+    encoding: "&encode=base64",
+    sessionToken: "",
     difficulty: "", //? Easy='easy' Medium='medium' Hard='hard'
     category: "", //?
     type: "", //?Multiple choice ='multiple' true/false='boolean'
   });
   console.log(correctOptionArray);
+  console.log(quizzesArray);
 
   useEffect(() => {
     const apiBaseURL = "https://opentdb.com/api.php?";
-    // const numberOfquiz = "10";
-    // const encoding = "&encode=base64";
 
     async function getQuizQuestion() {
-      const response = await fetch(`${apiBaseURL}amount=${apiUri.amount}`);
+      const response = await fetch(
+        `${apiBaseURL}amount=${apiUri.amount}${apiUri.encoding}${apiUri.sessionToken}`,
+      );
       const data = response.ok
         ? await response.json()
         : Promise.reject(response);
       setQuizzesArray(data.results);
     }
     getQuizQuestion();
+
+    async function getSessionToken() {
+      const response = await fetch(
+        "https://opentdb.com/api_token.php?command=request",
+      );
+      const sessionTokenData = await response.json();
+      setApiUri({
+        ...apiUri,
+        sessionToken: sessionTokenData,
+      });
+      // console.log(sessionToken);
+    }
+    getSessionToken();
   }, []);
-  useCallback;
   const quizQuestions = quizzesArray.map((quiz, index) => {
+    // ? To use randomise array use useEffect of choseOption from QuizQuestion
     const optionArray = [quiz.correct_answer, ...quiz.incorrect_answers];
-    optionArray.sort(() => Math.random() - 0.5);
+    // optionArray.sort(() => Math.random() - 0.5);
     return (
-      <QuizQuestionMemo
+      <QuizQuestion
         key={index}
         {...quiz}
         id={index}
@@ -57,19 +70,18 @@ function App() {
   function handleClick(e) {
     let btnTxt = e.target.textContent;
     // Change the text content and api content on click
+    // ? Add error msg if all the answers are no chose
     if (btnTxt === "Check answers") {
       setButtonText("Play again");
     } else if (btnTxt === "Play again") {
       setQuizStart(true);
       setButtonText("Check answers");
     }
-    // ? get score points i.e. 1 to 10
-    const commonElements = choseOption.filter((x) =>
-      correctOptionArray.some((y) => JSON.stringify(y) === JSON.stringify(x)),
-    );
-    console.log(commonElements);
   }
-
+  console.log(choseOption);
+  const commonElements = correctOptionArray.filter((x) =>
+    choseOption.some((y) => JSON.stringify(x) === JSON.stringify(y)),
+  );
   return (
     <main className="quiz-container">
       {quizStart ? (
@@ -79,10 +91,10 @@ function App() {
           {quizQuestions}
           <div className="score-section">
             <span
-              className="score-text"
+              className="message-txt"
               hidden={buttonText === "Check answers"}
             >
-              You scored {}/{apiUri.amount} correct answers
+              You scored {commonElements.length}/{apiUri.amount} correct answers
             </span>
             <button
               className="score-checker_btn"
