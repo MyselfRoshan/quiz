@@ -151,7 +151,7 @@ h1 {
   align-items: center;
   justify-content: center;
 }
-.score-text {
+.message-txt {
   font-size: var(--fs-500);
   font-weight: var(--fw-700);
 }
@@ -196,7 +196,7 @@ h1 {
   border-color: hsl(var(--tertiary-clr-400));
 }
 .quiz .incorrect {
-  background-color: hsl(var(--tertiary-clr-500)) !important;
+  background-color: hsl(var(--tertiary-clr-500));
   border-color: hsl(var(--tertiary-clr-500));
 }
 
