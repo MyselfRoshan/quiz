@@ -21,7 +21,6 @@ function App() {
 
   useEffect(() => {
     const apiBaseURL = "https://opentdb.com/api.php?";
-    // const numberOfquiz = "10";
     // const encoding = "&encode=base64";
 
     async function getQuizQuestion() {
