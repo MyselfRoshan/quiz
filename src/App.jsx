@@ -66,7 +66,6 @@ function App() {
       setButtonText("Check answers");
     }
   }
-  console.log(noOfCorrectAns);
   return (
     <main className="quiz-container">
       {quizStart ? (
