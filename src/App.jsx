@@ -9,7 +9,6 @@ function App() {
   const [choseOption, setChoseOption] = useState([]);
   const [buttonText, setButtonText] = useState("Check answers");
   const [optionArray, setOptionArray] = useState([]);
-  console.log(optionArray);
   const [apiUri, setApiUri] = useState({
     amount: 10,
     encoding: "&encode=url3986",
@@ -41,7 +40,7 @@ function App() {
       );
     }
   }, [quizStart]);
-  console.log(quizzesArray);
+
   const quizQuestions = quizzesArray.map((quiz, index) => {
     return (
       <QuizQuestion
@@ -50,8 +49,6 @@ function App() {
         id={index}
         optionArray={optionArray[index]}
         correctOptionArray={quiz.correct_answer}
-        setNoOfCorrectAns={setNoOfCorrectAns}
-        noOfCorrectAns={noOfCorrectAns}
         setChoseOption={setChoseOption}
         choseOption={choseOption}
         optionCheckerBtnTxt={buttonText}
