@@ -4,7 +4,6 @@ import QuizStart from "./components/QuizStart";
 
 function App() {
   const [quizStart, setQuizStart] = useState(true);
-  const [noOfCorrectAns, setNoOfCorrectAns] = useState([]);
   const [quizzesArray, setQuizzesArray] = useState([]);
   const [choseOption, setChoseOption] = useState([]);
   const [buttonText, setButtonText] = useState("Check answers");
@@ -76,6 +75,7 @@ function App() {
         <>
           {quizQuestions}
           <div className="score-section">
+            {/* ! add no of correct answer*/}
             <span
               className="message-txt"
               hidden={buttonText === "Check answers"}
