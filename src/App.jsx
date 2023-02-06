@@ -4,65 +4,57 @@ import QuizStart from "./components/QuizStart";
 
 function App() {
   const [quizStart, setQuizStart] = useState(true);
+  const [noOfCorrectAns, setNoOfCorrectAns] = useState([]);
   const [quizzesArray, setQuizzesArray] = useState([]);
   const [choseOption, setChoseOption] = useState([]);
   const [buttonText, setButtonText] = useState("Check answers");
-  const correctOptionArray = quizzesArray.map((quiz, index) => {
-    return { id: index, text: quiz.correct_answer };
-  });
+  const [optionArray, setOptionArray] = useState([]);
+  console.log(optionArray);
   const [apiUri, setApiUri] = useState({
     amount: 10,
-    encoding: "&encode=base64",
+    encoding: "&encode=url3986",
     sessionToken: "",
     difficulty: "", //? Easy='easy' Medium='medium' Hard='hard'
     category: "", //?
     type: "", //?Multiple choice ='multiple' true/false='boolean'
   });
-  console.log(correctOptionArray);
-  console.log(quizzesArray);
 
   useEffect(() => {
     const apiBaseURL = "https://opentdb.com/api.php?";
+    getQuizQuestion();
 
     async function getQuizQuestion() {
       const response = await fetch(
-        `${apiBaseURL}amount=${apiUri.amount}${apiUri.encoding}${apiUri.sessionToken}`,
+        `${apiBaseURL}amount=${apiUri.amount}${apiUri.encoding}`,
       );
       const data = response.ok
         ? await response.json()
         : Promise.reject(response);
-      setQuizzesArray(data.results);
-    }
-    getQuizQuestion();
 
-    async function getSessionToken() {
-      const response = await fetch(
-        "https://opentdb.com/api_token.php?command=request",
+      setQuizzesArray(data.results);
+      setOptionArray(
+        data.results.map((quiz) => {
+          const optionArrays = [quiz.correct_answer, ...quiz.incorrect_answers];
+          optionArrays.sort(() => Math.random() - 0.5);
+          return optionArrays;
+        }),
       );
-      const sessionTokenData = await response.json();
-      setApiUri({
-        ...apiUri,
-        sessionToken: sessionTokenData,
-      });
-      // console.log(sessionToken);
     }
-    getSessionToken();
-  }, []);
+  }, [quizStart]);
+  console.log(quizzesArray);
   const quizQuestions = quizzesArray.map((quiz, index) => {
-    // ? To use randomise array use useEffect of choseOption from QuizQuestion
-    const optionArray = [quiz.correct_answer, ...quiz.incorrect_answers];
-    // optionArray.sort(() => Math.random() - 0.5);
     return (
       <QuizQuestion
         key={index}
         {...quiz}
         id={index}
-        optionArray={optionArray}
-        correctOptionArray={correctOptionArray}
+        optionArray={optionArray[index]}
+        correctOptionArray={quiz.correct_answer}
+        setNoOfCorrectAns={setNoOfCorrectAns}
+        noOfCorrectAns={noOfCorrectAns}
         setChoseOption={setChoseOption}
         choseOption={choseOption}
         optionCheckerBtnTxt={buttonText}
-        quizStart={quizStart}
       />
     );
   });
@@ -78,10 +70,7 @@ function App() {
       setButtonText("Check answers");
     }
   }
-  console.log(choseOption);
-  const commonElements = correctOptionArray.filter((x) =>
-    choseOption.some((y) => JSON.stringify(x) === JSON.stringify(y)),
-  );
+  console.log(noOfCorrectAns);
   return (
     <main className="quiz-container">
       {quizStart ? (
@@ -94,7 +83,7 @@ function App() {
               className="message-txt"
               hidden={buttonText === "Check answers"}
             >
-              You scored {commonElements.length}/{apiUri.amount} correct answers
+              You scored {noOfCorrectAns}/{apiUri.amount} correct answers
             </span>
             <button
               className="score-checker_btn"
