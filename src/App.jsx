@@ -80,7 +80,7 @@ function App() {
               className="message-txt"
               hidden={buttonText === "Check answers"}
             >
-              You scored {noOfCorrectAns}/{apiUri.amount} correct answers
+              You scored {}/{apiUri.amount} correct answers
             </span>
             <button
               className="score-checker_btn"
