@@ -4,12 +4,10 @@ import QuizStart from "./components/QuizStart";
 
 function App() {
   const [quizStart, setQuizStart] = useState(true);
-  const [noOfCorrectAns, setNoOfCorrectAns] = useState([]);
   const [quizzesArray, setQuizzesArray] = useState([]);
   const [choseOption, setChoseOption] = useState([]);
   const [buttonText, setButtonText] = useState("Check answers");
   const [optionArray, setOptionArray] = useState([]);
-  console.log(optionArray);
   const [apiUri, setApiUri] = useState({
     amount: 10,
     encoding: "&encode=url3986",
@@ -41,7 +39,7 @@ function App() {
       );
     }
   }, [quizStart]);
-  console.log(quizzesArray);
+
   const quizQuestions = quizzesArray.map((quiz, index) => {
     return (
       <QuizQuestion
@@ -50,8 +48,6 @@ function App() {
         id={index}
         optionArray={optionArray[index]}
         correctOptionArray={quiz.correct_answer}
-        setNoOfCorrectAns={setNoOfCorrectAns}
-        noOfCorrectAns={noOfCorrectAns}
         setChoseOption={setChoseOption}
         choseOption={choseOption}
         optionCheckerBtnTxt={buttonText}
@@ -79,6 +75,7 @@ function App() {
         <>
           {quizQuestions}
           <div className="score-section">
+            {/* ! add no of correct answer*/}
             <span
               className="message-txt"
               hidden={buttonText === "Check answers"}

@@ -1,11 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 export default function QuizStart(props) {
-  useEffect(() => {
-    fetch("https://opentdb.com/api_category.php")
-      .then((res) => res.json())
-      .then((data) => console.log(data));
-  }, []);
   return (
     <div className="quizzical">
       <h1>Quizzical</h1>

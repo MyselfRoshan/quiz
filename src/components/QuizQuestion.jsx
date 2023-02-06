@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useMemo } from "react";
 
 export default function QuizQuestion(props) {
@@ -40,13 +40,7 @@ export default function QuizQuestion(props) {
         }
       }
     }
-    useMemo(() => {
-      if (props.optionCheckerBtnTxt === "Play again")
-        props.setNoOfCorrectAns([
-          ...props.noOfCorrectAns,
-          optionChoseBtnClass.includes("incorrect") ? 1 : 0,
-        ]);
-    }, []);
+
     return (
       <button
         key={index}
