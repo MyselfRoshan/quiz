@@ -28,7 +28,7 @@ function App() {
       const data = response.ok
         ? await response.json()
         : Promise.reject(response);
-
+      console.log(data);
       setQuizzesArray(data.results);
       setOptionArray(
         data.results.map((quiz) => {
@@ -39,7 +39,6 @@ function App() {
       );
     }
   }, [quizStart]);
-
   const quizQuestions = quizzesArray.map((quiz, index) => {
     return (
       <QuizQuestion
@@ -69,7 +68,11 @@ function App() {
   return (
     <main className="quiz-container">
       {quizStart ? (
-        <QuizStart setQuizStart={setQuizStart} />
+        <QuizStart
+          setQuizStart={setQuizStart}
+          apiUri={apiUri}
+          setApiUri={setApiUri}
+        />
       ) : (
         <>
           {quizQuestions}
