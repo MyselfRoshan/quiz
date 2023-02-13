@@ -68,6 +68,8 @@ body {
   background-color: hsl(var(--primary-clr-400));
   color: hsl(var(--primary-clr-900));
   line-height: 1.5;
+  display: grid;
+  place-items: center;
 }
 
 /* Remove list styles on ul, ol elements with a class attribute */
@@ -108,11 +110,6 @@ img:not([alt]) {
   }
 }
 
-/* #root,
-.quiz-container {
-  height: 100%;
-} */
-
 .quiz-container {
   --vertical-spacing: 2rem;
   display: grid;
@@ -121,13 +118,29 @@ img:not([alt]) {
 }
 
 .quizzical {
-  place-self: center;
+  display: grid;
+  place-items: center;
 }
 
 h1 {
   font-size: var(--fs-700);
 }
-
+h2 {
+  font-size: var(--fs-450);
+  text-align: center;
+}
+.mode-selection {
+  margin-block: 1rem;
+}
+.mode-selection-btn {
+  background-color: transparent;
+  border: none;
+  padding: 0 1rem;
+  border-right: 2.5px solid hsl(var(--primary-clr-900));
+}
+.mode-selection-btn:last-of-type {
+  border-right: none;
+}
 .start-quiz-btn {
   font-weight: var(--fw-500);
   background-color: hsl(var(--secondary-clr-400));
