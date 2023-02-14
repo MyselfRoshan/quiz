@@ -141,6 +141,25 @@ h2 {
 .mode-selection-btn:last-of-type {
   border-right: none;
 }
+.mode-selection-containers {
+  position: relative;
+}
+.mode-selection-container {
+  position: absolute;
+  padding: 1rem;
+  background-color: hsl(var(--secondary-clr-500));
+  border-radius: 0.5rem;
+  left: 0;
+}
+.mode-selection-container:first-of-type {
+  top: -6rem;
+}
+.mode-selection-item {
+  display: block;
+  margin-block: 0.45rem;
+  /* flex-direction: column; */
+}
+
 .start-quiz-btn {
   font-weight: var(--fw-500);
   background-color: hsl(var(--secondary-clr-400));

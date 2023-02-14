@@ -60,7 +60,9 @@ export default function QuizStart(props) {
       <div className="quiz-mode-container">
         <h2>Quiz Modes</h2>
         <div className="mode-selection">{modeSelectionBtns}</div>
-        <div className="">{modeSelectionContainers}</div>
+        <div className="mode-selection-containers">
+          {modeSelectionContainers}
+        </div>
       </div>
       <button
         className="start-quiz-btn"
