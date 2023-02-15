@@ -1,5 +1,4 @@
 import React from "react";
-import ModeSelectionBtn from "./ModeSelectionBtn";
 import ModeSelectionContainer from "./ModeSelectionContainer";
 
 export default function QuizStart(props) {
@@ -43,13 +42,8 @@ export default function QuizStart(props) {
       { id: 32, name: "Entertainment: Cartoon & Animations" },
     ],
   };
-  const modeSelectionBtns = Object.keys(modes).map(
-    (modeSelectionBtnTxt, index) => (
-      <ModeSelectionBtn key={index} modeSelectionBtnTxt={modeSelectionBtnTxt} />
-    ),
-  );
 
-  const modeSelectionContainers = Object.values(modes).map(
+  const modeSelectionContainers = Object.entries(modes).map(
     (modeSelectionContainer, id) => (
       <ModeSelectionContainer key={id} {...modeSelectionContainer} />
     ),
@@ -59,8 +53,9 @@ export default function QuizStart(props) {
       <h1>Quizzical</h1>
       <div className="quiz-mode-container">
         <h2>Quiz Modes</h2>
-        <div className="mode-selection">{modeSelectionBtns}</div>
-        <div className="">{modeSelectionContainers}</div>
+        <div className="mode-selection-containers">
+          {modeSelectionContainers}
+        </div>
       </div>
       <button
         className="start-quiz-btn"
