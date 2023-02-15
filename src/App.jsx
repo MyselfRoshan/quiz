@@ -66,7 +66,7 @@ function App() {
     }
   }
   return (
-    <main className="quiz-container">
+    <>
       {quizStart ? (
         <QuizStart
           setQuizStart={setQuizStart}
@@ -75,25 +75,27 @@ function App() {
         />
       ) : (
         <>
-          {quizQuestions}
-          <div className="score-section">
-            {/* ! add no of correct answer*/}
-            <span
-              className="message-txt"
-              hidden={buttonText === "Check answers"}
-            >
-              You scored {}/{apiUri.amount} correct answers
-            </span>
-            <button
-              className="score-checker_btn"
-              onClick={(e) => handleClick(e)}
-            >
-              {buttonText}
-            </button>
-          </div>
+          <main className="quiz-container">
+            {quizQuestions}
+            <div className="score-section">
+              {/* ! add no of correct answer*/}
+              <span
+                className="message-txt"
+                hidden={buttonText === "Check answers"}
+              >
+                You scored {}/{apiUri.amount} correct answers
+              </span>
+              <button
+                className="score-checker_btn"
+                onClick={(e) => handleClick(e)}
+              >
+                {buttonText}
+              </button>
+            </div>
+          </main>
         </>
       )}
-    </main>
+    </>
   );
 }
 

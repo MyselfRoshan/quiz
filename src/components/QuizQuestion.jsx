@@ -55,7 +55,7 @@ export default function QuizQuestion(props) {
 
   return (
     <div className="quiz">
-      <h2 className="quiz-question">{decodeURL3986(props.question)}</h2>
+      <p className="quiz-question">{decodeURL3986(props.question)}</p>
       <div className="quiz-answers">{options}</div>
     </div>
   );
