@@ -132,13 +132,14 @@ h2 {
 }
 
 .mode-selection-btn {
+  cursor: pointer;
   background-color: transparent;
   border: none;
   padding: 0 1rem;
   border-right: 2.5px solid hsl(var(--primary-clr-900));
 }
 .category-btn {
-  border-right: none;
+  border-right: transparent;
 }
 .mode-selection-containers {
   display: flex;
@@ -154,26 +155,27 @@ h2 {
 }
 .mode-selection-items {
   position: absolute;
-  z-index: 2;
+  z-index: 1;
   width: max-content;
   max-height: 15rem;
   overflow-y: auto;
-  display: none;
-  /* top: -50%; */
-  top: -100%;
-  padding: 1rem 1.5rem;
+  top: 100%;
+  padding-block: 1rem;
   background-color: hsl(var(--secondary-clr-500));
   border-radius: 0.5rem;
 }
 
 .mode-selection-item {
+  padding-inline: 1.5rem;
   display: block;
+  font-weight: var(--fw-400);
 }
-
-/* .mode-selection-item:not(:last-of-type) {
-  margin-block-end: 0.25rem;
-  margin-block-end: unset;
-} */
+.mode-selection-item:is(:hover, :focus) {
+  background-color: hsl(var(--secondary-clr-400));
+  color: hsl(var(--primary-clr-400));
+  font-weight: var(--fw-500);
+  transition: color 250ms ease-in-out, background 500ms linear;
+}
 
 .start-quiz-btn {
   font-weight: var(--fw-500);

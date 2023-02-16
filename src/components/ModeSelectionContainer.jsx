@@ -15,20 +15,25 @@ function ModeSelectionContainer(props) {
 
   return (
     <div className="mode-selection-container">
-      {/* !Stop constant options flickring */}
+      {/* !Only show one options when hovered */}
       <button
         key={btnTxt[0]}
         className={`mode-selection-btn ${btnTxt.toLowerCase()}-btn`}
         // onMouseOut={() => setIsHovered(false)}
         onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
       >
         {btnTxt}
       </button>
 
-      <div className={`mode-selection-items ${isHovered ? "active" : ""}`}>
-        {modeSelctionItems}
-      </div>
+      {isHovered && (
+        <div
+          className="mode-selection-items"
+          onMouseLeave={() => setIsHovered(false)}
+          onClick={(e) => console.log(e.target.getAttribute("data-id"))}
+        >
+          {modeSelctionItems}
+        </div>
+      )}
     </div>
   );
 }
