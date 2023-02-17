@@ -4,18 +4,18 @@ import ModeSelectionContainer from "./ModeSelectionContainer";
 export default function QuizStart(props) {
   const modes = {
     Difficulty: [
-      { id: "", name: "Any Type" },
+      { id: "difficultyNull", name: "Any Type" },
       { id: "easy", name: "Easy" },
       { id: "medium", name: "Medium" },
       { id: "hard", name: "Hard" },
     ],
     Type: [
-      { id: "", name: "Any Type" },
+      { id: "typeNull", name: "Any Type" },
       { id: "multiple", name: "Multiple Choice" },
       { id: "boolean", name: "True / False" },
     ],
     Category: [
-      { id: "", name: "All Type" },
+      { id: "categoryNull", name: "All Type" },
       { id: 9, name: "General Knowledge" },
       { id: 10, name: "Entertainment: Books" },
       { id: 11, name: "Entertainment: Film" },
@@ -45,7 +45,12 @@ export default function QuizStart(props) {
 
   const modeSelectionContainers = Object.entries(modes).map(
     (modeSelectionContainer, id) => (
-      <ModeSelectionContainer key={id} {...modeSelectionContainer} />
+      <ModeSelectionContainer
+        key={id}
+        {...modeSelectionContainer}
+        apiUri={props.apiUri}
+        setApiUri={props.setApiUri}
+      />
     ),
   );
   return (

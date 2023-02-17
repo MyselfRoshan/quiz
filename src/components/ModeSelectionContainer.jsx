@@ -5,6 +5,35 @@ function ModeSelectionContainer(props) {
   const [isHovered, setIsHovered] = useState(false);
   const btnTxt = props[0];
 
+  function handleClick(e) {
+    setIsHovered(false);
+    const id = e.target.getAttribute("data-id");
+    console.log(id);
+    // For manipulating dicciculty for api call
+    if (id === "difficultyNull") {
+      props.setApiUri({ ...props.apiUri, difficulty: "" });
+    }
+    if (id === "easy" || id === "medium" || id === "hard") {
+      props.setApiUri({ ...props.apiUri, difficulty: `&difficulty=${id}` });
+    }
+
+    // For manipulating type for api call
+    if (id === "typeNull") {
+      props.setApiUri({ ...props.apiUri, type: "" });
+    }
+    if (id === "multiple" || id === "boolean") {
+      props.setApiUri({ ...props.apiUri, type: `&type=${id}` });
+    }
+
+    // For manipulating category for api call
+    if (id === "categoryNull") {
+      props.setApiUri({ ...props.apiUri, category: "" });
+    }
+    if (!isNaN(id)) {
+      props.setApiUri({ ...props.apiUri, category: `&category=${id}` });
+    }
+  }
+
   const modeSelctionItems = Object.values(props[1]).map((modeSelectionItem) => (
     <ModeSelectionItem
       key={modeSelectionItem.id}
@@ -15,20 +44,25 @@ function ModeSelectionContainer(props) {
 
   return (
     <div className="mode-selection-container">
-      {/* !Stop constant options flickring */}
+      {/* !Only show one options when hovered */}
       <button
         key={btnTxt[0]}
         className={`mode-selection-btn ${btnTxt.toLowerCase()}-btn`}
         // onMouseOut={() => setIsHovered(false)}
         onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
       >
         {btnTxt}
       </button>
 
-      <div className={`mode-selection-items ${isHovered ? "active" : ""}`}>
-        {modeSelctionItems}
-      </div>
+      {isHovered && (
+        <div
+          className="mode-selection-items"
+          onMouseLeave={() => setIsHovered(false)}
+          onClick={(e) => handleClick(e)}
+        >
+          {modeSelctionItems}
+        </div>
+      )}
     </div>
   );
 }
