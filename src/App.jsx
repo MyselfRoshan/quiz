@@ -53,6 +53,7 @@ function App() {
         );
       }
       if (code === 1) {
+        setQuizzesArray([]);
         setTimeout(() => {
           alert(
             "No results found for selected options. Redirecting to main page",
