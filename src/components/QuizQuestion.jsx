@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useMemo } from "react";
 
 export default function QuizQuestion(props) {

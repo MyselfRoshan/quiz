@@ -30,7 +30,7 @@ function App() {
       const data = response.ok
         ? await response.json()
         : Promise.reject(response);
-      console.log(data);
+      console.log(response);
       /*
       Code 0: Success Returned results successfully.
       Code 1: No Results Could not return results. The API doesn't have enough questions for your query. (Ex. Asking for 50 Questions in a Category that only has 20.)
@@ -54,12 +54,13 @@ function App() {
       }
       if (code === 1) {
         setQuizzesArray([]);
-        setTimeout(() => {
+        const time = setTimeout(() => {
           alert(
             "No results found for selected options. Redirecting to main page",
           );
           setQuizStart(true);
         }, 5000);
+        return () => clearTimeout(time);
       }
     }
   }, [apiUri]);
