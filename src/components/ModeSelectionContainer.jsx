@@ -8,7 +8,6 @@ function ModeSelectionContainer(props) {
   function handleClick(e) {
     setIsHovered(false);
     const id = e.target.getAttribute("data-id");
-    console.log(id);
     // For manipulating dicciculty for api call
     if (id === "difficultyNull") {
       props.setApiUri({ ...props.apiUri, difficulty: "" });
@@ -49,7 +48,7 @@ function ModeSelectionContainer(props) {
         key={btnTxt[0]}
         className={`mode-selection-btn ${btnTxt.toLowerCase()}-btn`}
         // onMouseOut={() => setIsHovered(false)}
-        onMouseEnter={() => setIsHovered(true)}
+        onMouseEnter={(e) => setIsHovered(true)}
       >
         {btnTxt}
       </button>
