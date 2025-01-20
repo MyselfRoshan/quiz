@@ -6,6 +6,7 @@ import QuizStart from "./components/QuizStart";
 import { useQuizState } from "./hooks/useQuizState";
 import { NO_OF_QUIZ_TO_FETCH, QuizState } from "./utils/constant";
 import { decodeURL3986, shuffle } from "./utils/helper";
+import { useEffect } from "react";
 
 function App() {
   const { quizState } = useQuizState();
@@ -23,6 +24,7 @@ function App() {
     refetch: fetchQuizzes,
   } = useQuery({
     enabled: false,
+    staleTime: 10000,
     queryKey: ["quizzes"],
     queryFn: async () => {
       const { amount, category, difficulty, type } = apiOptions;
@@ -55,7 +57,7 @@ function App() {
   });
 
   return (
-    <main className="quiz-wrapper">
+    <>
       {quizState === QuizState.QUESTION || quizState == QuizState.ANSWER ? (
         <QuizSection quizzes={quizzes} isLoading={isLoading} />
       ) : (
@@ -68,7 +70,7 @@ function App() {
         visibleToasts={100}
         className="toaster-section"
       />
-    </main>
+    </>
   );
 }
 
