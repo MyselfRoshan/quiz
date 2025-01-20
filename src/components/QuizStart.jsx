@@ -33,7 +33,6 @@ function QuizStart({ setApiOptions, fetchQuizzes }) {
     <div className="quizzical">
       <h1>Quizzical</h1>
       <div className="quiz-mode-container">
-        <h2>Quiz Modes</h2>
         <div className="mode-selection-containers">{selectionOptions}</div>
       </div>
       <button className="start-quiz-btn" onClick={handleClick}>Start Quiz</button>
