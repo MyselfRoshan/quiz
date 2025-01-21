@@ -14,7 +14,7 @@ function QuizSection({ quizzes, isLoading }) {
     quizId,
     answerId,
     selectedAnswer,
-    actualAnswer
+    actualAnswer,
   ) => {
     selectedAnswers.current.set(quizId, {
       answerId,
@@ -22,7 +22,6 @@ function QuizSection({ quizzes, isLoading }) {
       actualAnswer,
     });
   };
-  console.log(selectedAnswers);
   const quizSection = quizzes?.map((quiz, index) => {
     const buttonText = "a";
     const { correct_answer, all_answers, question } = quiz;
@@ -61,39 +60,30 @@ function QuizSection({ quizzes, isLoading }) {
 
       setScore(scoreCount);
       toast.success(
-        `You scored ${scoreCount}/${NO_OF_QUIZ_TO_FETCH} correct answers!`
+        `You scored ${scoreCount}/${NO_OF_QUIZ_TO_FETCH} correct answers!`,
       );
       return;
     }
 
     toast.warning(
-      `You're doing great! Just answer ${questionsLeftToAnswer} more question(s) to complete the quiz!`
+      `You're doing great! Just answer ${questionsLeftToAnswer} more question(s) to complete the quiz!`,
     );
   }
 
   return (
-    <>
-      {isLoading ? (
-        <Spinner />
-      ) : (
-        <section className="quizzes-wrapper">
-          {quizSection}
-          <div className="score-section">
-            <button
-              className="score-checker_btn"
-              onClick={(e) => handleClick(e)}
-            >
-              {quizState === QuizState.ANSWER ? "Play Again" : "Check Answer"}
-            </button>
-          </div>
-          {quizState === QuizState.ANSWER && (
-            <span className="message-txt">
-              You scored {score}/{NO_OF_QUIZ_TO_FETCH} correct answers
-            </span>
-          )}
-        </section>
+    <section className="quizzes-wrapper">
+      {quizSection}
+      <div className="score-section">
+        <button className="score-checker_btn" onClick={e => handleClick(e)}>
+          {quizState === QuizState.ANSWER ? "Play Again" : "Check Answer"}
+        </button>
+      </div>
+      {quizState === QuizState.ANSWER && (
+        <span className="message-txt">
+          You scored {score}/{NO_OF_QUIZ_TO_FETCH} correct answers
+        </span>
       )}
-    </>
+    </section>
   );
 }
 

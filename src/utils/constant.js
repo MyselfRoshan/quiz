@@ -46,5 +46,4 @@ export const QuizState = Object.freeze({
   QUESTION: "question",
   ANSWER: "answer",
   REVIEW: "review",
-  // RESTART: "restart",
 });

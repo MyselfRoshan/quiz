@@ -15,5 +15,5 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <App />
       </QuizStateProvider>
     </QueryClientProvider>
-  </React.StrictMode>
+  </React.StrictMode>,
 );

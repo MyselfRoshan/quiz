@@ -1,19 +1,21 @@
-import { useState } from "react"
-import { Popover } from "react-tiny-popover"
+import { useState } from "react";
+import { Popover } from "react-tiny-popover";
+import { useQuizState } from "../hooks/useQuizState";
 
 function QuizSelectOptions(props) {
-  const { type, options, setSelectedOptions } = props
-  const [isPopoverOpen, setIsPopOverOpen] = useState(false)
+  const { type, options } = props;
+  const [isPopoverOpen, setIsPopOverOpen] = useState(false);
+  const { setApiOptions: setSelectedOptions } = useQuizState();
 
   const optionsArray = options.map((option, index) => {
-    const { id: key, name: value } = option
+    const { id: key, name: value } = option;
 
     function handleOnChange(event) {
-      const selectedValue = event.target.value
-      setSelectedOptions((prev) => {
-        const updatedOptions = { ...prev, [type]: selectedValue }
-        return updatedOptions
-      })
+      const selectedValue = event.target.value;
+      setSelectedOptions(prev => {
+        const updatedOptions = { ...prev, [type]: selectedValue };
+        return updatedOptions;
+      });
     }
 
     return (
@@ -23,14 +25,14 @@ function QuizSelectOptions(props) {
             id={`${key}-${index}`}
             type="radio"
             name={type}
-            value={key}
+            value={key ?? ""}
             onChange={handleOnChange}
           />
           <span>{value}</span>
         </label>
       </li>
-    )
-  })
+    );
+  });
 
   return (
     <Popover
@@ -50,7 +52,7 @@ function QuizSelectOptions(props) {
         {type.toUpperCase()}
       </button>
     </Popover>
-  )
+  );
 }
 
-export default QuizSelectOptions
+export default QuizSelectOptions;

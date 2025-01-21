@@ -1,33 +1,12 @@
 import React from "react";
-import { useQuizState } from "../hooks/useQuizState";
-import { apiAllOptions, QuizState } from "../utils/constant";
+import { apiAllOptions } from "../utils/constant";
 import QuizSelectOptions from "./QuizOptions";
-function QuizStart({ setApiOptions, fetchQuizzes }) {
-  const { setQuizState } = useQuizState();
+function QuizStart({ handleFetch }) {
   const selectionOptions = Object.entries(apiAllOptions).map(
     ([type, options], id) => {
-      return (
-        <QuizSelectOptions
-          key={id}
-          type={type}
-          options={options}
-          setSelectedOptions={setApiOptions}
-        />
-      );
-    }
+      return <QuizSelectOptions key={id} type={type} options={options} />;
+    },
   );
-
-  function handleClick(e) {
-    e.preventDefault();
-    setQuizState(QuizState.QUESTION);
-    fetchQuizzes();
-    setApiOptions({
-      amount: 10,
-      difficulty: null,
-      type: null,
-      category: null,
-    });
-  }
 
   return (
     <div className="quizzical">
@@ -35,7 +14,9 @@ function QuizStart({ setApiOptions, fetchQuizzes }) {
       <div className="quiz-mode-container">
         <div className="mode-selection-containers">{selectionOptions}</div>
       </div>
-      <button className="start-quiz-btn" onClick={handleClick}>Start Quiz</button>
+      <button className="start-quiz-btn" onClick={handleFetch}>
+        Start Quiz
+      </button>
     </div>
   );
 }

@@ -38,7 +38,7 @@ export default function Quiz(props) {
             ? isCorrect
               ? "correct"
               : "incorrect"
-            : null
+            : null,
         )}
         onClick={handleClick}
       >

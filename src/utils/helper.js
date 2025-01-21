@@ -13,7 +13,7 @@ export function shuffle(array) {
   }
 }
 
-const rand = (n) => 0 | (Math.random() * n);
+const rand = n => 0 | (Math.random() * n);
 
 function swap(array, i, j) {
   let q = array[i];
